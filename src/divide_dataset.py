@@ -2,7 +2,7 @@ import os
 import time
 
 #@TODO: debug to check that packages from requirements.txt are installed
-import yaml
+#import yaml
 import htmllistparse
 
 import supervisely_lib as sly
