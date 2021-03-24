@@ -6,7 +6,7 @@
   ],
   "description": "Divide dataset and create new project with src project's information",
   "docker_image": "supervisely/base-py-sdk:6",
-  "main_script": "src/divide_dataset_test.py",
+  "main_script": "src/divide_dataset.py",
   "modal_template": "src/modal.html",
   "modal_template_state": {
     "countDatasets": 2
