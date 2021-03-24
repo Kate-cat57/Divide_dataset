@@ -22,7 +22,7 @@ my_app = sly.AppService()
 @sly.timeit
 def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
     # Open exist src project
-    src_project = api.project.get_info_by_name(WORKSPACE_ID, PROJECT_ID)
+    src_project = api.project.get_info_by_id(PROJECT_ID)
 
     if src_project is None:
         print("Workspace {!r} not found".format(src_project.name))
