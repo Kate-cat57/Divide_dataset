@@ -21,7 +21,6 @@ my_app = sly.AppService()
 @my_app.callback("divide_dataset")
 @sly.timeit
 def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
-    '''
     # Open exist src project
     src_project = api.project.get_info_by_name(WORKSPACE_ID, PROJECT_ID)
 
@@ -68,7 +67,6 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
             api.annotation.upload_anns(res_img_ids, anns)
 
         temp_count_images += count_images_in_dataset
-        '''
 
     my_app.stop()
 
