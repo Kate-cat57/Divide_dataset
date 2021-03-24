@@ -29,7 +29,7 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
     else:
         print(src_project)
     print()
-    '''
+  
     # Create result project
     if src_project.name == RESULT_PROJECT_NAME:
         print("You can't create {!r} project, because it already exist!".format(src_project.name))
@@ -67,7 +67,7 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
             api.annotation.upload_anns(res_img_ids, anns)
 
         temp_count_images += count_images_in_dataset
-    '''
+  
     my_app.stop()
 
 
