@@ -7,7 +7,7 @@ import time
 
 import supervisely_lib as sly
 
-task_id = os.environ["TASK_ID"] # ----?
+#task_id = os.environ["TASK_ID"] # ----?
 TEAM_ID = int(os.environ['context.teamId'])
 WORKSPACE_ID = int(os.environ['context.workspaceId'])
 PROJECT_ID = int(os.environ['modal.state.slyProjectId'])
@@ -20,7 +20,7 @@ my_app = sly.AppService()
 
 @my_app.callback("divide_dataset")
 @sly.timeit
-def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
+def divide_dataset(api: sly.Api, context, state, app_logger):
     # Open exist src project
     src_project = api.project.get_info_by_name(WORKSPACE_ID, PROJECT_ID)
 
