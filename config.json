@@ -1,0 +1,22 @@
+{
+  "name": "Divide dataset",
+  "type": "app",
+  "categories": [
+    "transform"
+  ],
+  "description": "Divide dataset and create new project with src project's information",
+  "docker_image": "supervisely/base-py-sdk:6",
+  "main_script": "src/divide_dataset_test.py",
+  "modal_template": "src/modal.html",
+  "modal_template_state": {
+    "countDatasets": 2
+  },
+  "task_location": "workspace_tasks",
+  "isolate": true,
+  "context_menu": {
+    "target": ["images_dataset"],
+    "context_category": "Transform"
+  },
+  "icon": "https://img.icons8.com/fluent/96/000000/combo-chart.png",
+  "icon_background": "#FFFFFF"
+}
