@@ -14,6 +14,7 @@ PROJECT_ID = int(os.environ['modal.state.slyProjectId'])
 DATASET_ID = os.environ.get('modal.state.slyDatasetId', None)
 COUNT_DATASETS = int(os.environ['modal.state.countDatasets'])
 RESULT_PROJECT_NAME = os.environ["modal.state.projectName"]
+DATASET_PREFIX = os.environ["modal.state.datasetPrefix"]
 
 my_app = sly.AppService()
 
@@ -61,7 +62,7 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
         if index_dataset == res_count_dataset - 1:  # case with remainder of division
             count_images_in_dataset += count_images_in_scr_project % res_count_dataset
         # Create dataset in result project
-        dst_dataset = api.dataset.create(res_project.id, src_dataset_info.name + '_' + str(index_dataset))
+        dst_dataset = api.dataset.create(res_project.id, DATASET_PREFIX + '_' + str(index_dataset))
 
         for img_infos in sly.batched(img_infos_all[temp_count_images:(temp_count_images + count_images_in_dataset)]):
             img_names, img_ids, img_metas = zip(*((x.name, x.id, x.meta) for x in img_infos))
@@ -85,7 +86,8 @@ def main():
         "WORKSPACE_ID": WORKSPACE_ID,
         "PROJECT_ID": PROJECT_ID,
         "DATASET_ID": DATASET_ID,
-        "countDatasets": COUNT_DATASETS
+        "COUNT_DATASETS": COUNT_DATASETS
+        "DATASET_PREFIX": DATASET_PREFIX
     })
     #initial_events = [{"state": None, "context": None, "command": "divide_dataset"}]
     # Run application service
