@@ -66,7 +66,7 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
     
     # Some variants with prefix and original name of dataset
     res_name_dataset = DATASET_PREFIX
-    if DATASET_PREFIX == "":
+    if DATASET_PREFIX == None:
         res_name_dataset = src_dataset_info.name
 
     # Create datasets and upload them by information fro src dataset
