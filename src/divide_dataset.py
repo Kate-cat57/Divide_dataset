@@ -63,6 +63,11 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
     # Get information from src dataset
     src_dataset_info = api.dataset.get_info_by_id(DATASET_ID)
     img_infos_all = api.image.get_list(DATASET_ID)
+    
+    # Some variants with prefix and original name of dataset
+    res_name_dataset = DATASET_PREFIX
+    if DATASET_PREFIX == "":
+        res_name_dataset = src_dataset_info.name
 
     # Create datasets and upload them by information fro src dataset
     temp_count_images = 0
@@ -70,7 +75,7 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
         if index_dataset == res_count_dataset - 1:  # case with remainder of division
             count_images_in_dataset += count_images_in_scr_project % res_count_dataset
         # Create dataset in result project
-        dst_dataset = api.dataset.create(res_project.id, DATASET_PREFIX + '_' + str(index_dataset))
+        dst_dataset = api.dataset.create(res_project.id, res_name_dataset + '_' + str(index_dataset))
 
         for img_infos in sly.batched(img_infos_all[temp_count_images:(temp_count_images + count_images_in_dataset)]):
             img_names, img_ids, img_metas = zip(*((x.name, x.id, x.meta) for x in img_infos))
