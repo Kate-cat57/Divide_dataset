@@ -50,19 +50,16 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
         src_meta = sly.ProjectMeta.from_json(src_meta_json)
         res_meta = src_meta
         api.project.update_meta(res_project.id, res_meta.to_json())
-
-    # Some information about count of images in src project and parts of dataset in result project
-    count_images_in_scr_project = api.project.get_images_count(PROJECT_ID)  
-    
-    res_count_dataset = COUNT_DATASETS
-    if COUNT_DATASETS > count_images_in_scr_project:
-        res_count_dataset = count_images_in_scr_project
-        
-    count_images_in_dataset = count_images_in_scr_project // res_count_dataset
      
     # Get information from src dataset
     src_dataset_info = api.dataset.get_info_by_id(DATASET_ID)
     img_infos_all = api.image.get_list(DATASET_ID)
+    
+    count_images_in_scr_dataset = len(img_infos_all)
+    res_count_dataset = COUNT_DATASETS
+    if COUNT_DATASETS > count_images_in_scr_dataset:
+        res_count_dataset = count_images_in_scr_dataset
+    count_images_in_dataset = count_images_in_scr_dataset // res_count_dataset
     
     # Some variants with prefix and original name of dataset
     res_name_dataset = DATASET_PREFIX
@@ -73,7 +70,7 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
     temp_count_images = 0
     for index_dataset in range(res_count_dataset):
         if index_dataset == res_count_dataset - 1:  # case with remainder of division
-            count_images_in_dataset += count_images_in_scr_project % res_count_dataset
+            count_images_in_dataset += count_images_in_scr_dataset % res_count_dataset
         # Create dataset in result project
         dst_dataset = api.dataset.create(res_project.id, res_name_dataset + '_' + str(index_dataset))
 
