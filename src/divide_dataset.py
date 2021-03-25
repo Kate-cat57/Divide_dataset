@@ -32,10 +32,24 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
     print()
   
     # Check if result project already exist
-    if api.project.exists(WORKSPACE_ID,RESULT_PROJECT_NAME):
-        res_project = api.project.get_info_by_name(WORKSPACE_ID,RESULT_PROJECT_NAME)
+    if api.project.exists(WORKSPACE_ID, RESULT_PROJECT_NAME):
+        res_project = api.project.get_info_by_name(WORKSPACE_ID, RESULT_PROJECT_NAME)
+        # Merge meta src project and  meta result project
+        src_meta_json = api.project.get_meta(PROJECT_ID)
+        src_meta = sly.ProjectMeta.from_json(src_meta_json)
+
+        res_meta_json = api.project.get_meta(res_project.id)
+        res_meta = sly.ProjectMeta.from_json(res_meta_json)
+        res_meta = src_meta.merge(res_meta)
+
+        api.project.update_meta(res_project.id, res_meta.to_json())
     else:
         res_project = api.project.create(WORKSPACE_ID, RESULT_PROJECT_NAME)
+        # Add meta from src project to result project
+        src_meta_json = api.project.get_meta(PROJECT_ID)
+        src_meta = sly.ProjectMeta.from_json(src_meta_json)
+        res_meta = src_meta
+        api.project.update_meta(res_project.id, res_meta.to_json())
 
     # Some information about count of images in src project and parts of dataset in result project
     count_images_in_scr_project = api.project.get_images_count(PROJECT_ID)  
@@ -45,13 +59,7 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
         res_count_dataset = count_images_in_scr_project
         
     count_images_in_dataset = count_images_in_scr_project // res_count_dataset
-        
-    # Add meta from src project to result project
-    src_meta_json = api.project.get_meta(PROJECT_ID)
-    src_meta = sly.ProjectMeta.from_json(src_meta_json)
-    res_meta = src_meta
-    api.project.update_meta(res_project.id, res_meta.to_json())
-
+     
     # Get information from src dataset
     src_dataset_info = api.dataset.get_info_by_id(DATASET_ID)
     img_infos_all = api.image.get_list(DATASET_ID)
