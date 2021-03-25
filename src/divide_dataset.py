@@ -86,7 +86,7 @@ def main():
         "WORKSPACE_ID": WORKSPACE_ID,
         "PROJECT_ID": PROJECT_ID,
         "DATASET_ID": DATASET_ID,
-        "COUNT_DATASETS": COUNT_DATASETS
+        "COUNT_DATASETS": COUNT_DATASETS,
         "DATASET_PREFIX": DATASET_PREFIX
     })
     #initial_events = [{"state": None, "context": None, "command": "divide_dataset"}]
