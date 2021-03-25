@@ -9,7 +9,8 @@
   "main_script": "src/divide_dataset.py",
   "modal_template": "src/modal.html",
   "modal_template_state": {
-    "countDatasets": 2
+    "countDatasets": 2,
+    "datasetPrefix": "ds"
   },
   "task_location": "workspace_tasks",
   "isolate": true,
