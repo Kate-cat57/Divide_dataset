@@ -36,13 +36,12 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
     res_project = api.project.create(WORKSPACE_ID, RESULT_PROJECT_NAME)
 
     # Some information about count of images in src project and parts of dataset in result project
-    count_images_in_scr_project = api.project.get_images_count(PROJECT_ID)
-  
-    if count_images_in_scr_project < COUNT_DATASETS:
-        COUNT_DATASETS = count_images_in_scr_project
-        
+    count_images_in_scr_project = api.project.get_images_count(PROJECT_ID)  
     count_images_in_dataset = count_images_in_scr_project // COUNT_DATASETS
-
+    
+    if count_images_in_dataset == 0: # COUNT_DATASETS > count_images_in_scr_project
+        count_images_in_dataset = 1
+        
     # Add meta from src project to result project
     src_meta_json = api.project.get_meta(PROJECT_ID)
     src_meta = sly.ProjectMeta.from_json(src_meta_json)
