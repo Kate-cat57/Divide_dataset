@@ -14,7 +14,7 @@ PROJECT_ID = int(os.environ['modal.state.slyProjectId'])
 DATASET_ID = os.environ.get('modal.state.slyDatasetId', None)
 COUNT_DATASETS = int(os.environ['modal.state.countDatasets'])
 RESULT_PROJECT_NAME = os.environ["modal.state.projectName"]
-DATASET_PREFIX = os.environ["modal.state.datasetPrefix"]
+DATASET_PREFIX = os.environ.get('modal.state.datasetPrefix', None)
 
 my_app = sly.AppService()
 
@@ -66,7 +66,7 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
     
     # Some variants with prefix and original name of dataset
     res_name_dataset = DATASET_PREFIX
-    if DATASET_PREFIX == " ":
+    if DATASET_PREFIX == None:
         res_name_dataset = src_dataset_info.name
 
     # Create datasets and upload them by information fro src dataset
