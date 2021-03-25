@@ -30,10 +30,11 @@ def divide_dataset(api: sly.Api, task_id, context, state, app_logger):
         print(src_project)
     print()
   
-    # Create result project
-    if src_project.name == RESULT_PROJECT_NAME:
-        print("You can't create {!r} project, because it already exist!".format(src_project.name))
-    res_project = api.project.create(WORKSPACE_ID, RESULT_PROJECT_NAME)
+    # Check if result project already exist
+    if api.project.exists(WORKSPACE_ID,RESULT_PROJECT_NAME):
+        res_project = api.project.get_info_by_name(WORKSPACE_ID,RESULT_PROJECT_NAME)
+    else:
+        res_project = api.project.create(WORKSPACE_ID, RESULT_PROJECT_NAME)
 
     # Some information about count of images in src project and parts of dataset in result project
     count_images_in_scr_project = api.project.get_images_count(PROJECT_ID)  
